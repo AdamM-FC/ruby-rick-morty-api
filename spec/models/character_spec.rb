@@ -1,15 +1,10 @@
 require 'rails_helper'
 
-class CreateCharacters < ActiveRecord::Migration[6.0]
-  def change
-    create_table :characters do |t|
-      t.string :name
-      t.string :status
-      t.string :species
-      t.string :character_type
-      t.string :gender
-      t.string :image
-      t.time :created
-    end
-  end
+RSpec.describe Character, type: :model do
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:status) }
+    it { should validate_presence_of(:species) }
+    it { should validate_presence_of(:character_type) }
+    it { should validate_presence_of(:gender) }
+    it { should validate_presence_of(:image) }
 end

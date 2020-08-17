@@ -8,7 +8,7 @@ let(:character_id) { characters.first.id }
         before { get '/characters'}
 
         it 'returns characters' do 
-            expect(json).not_to_ be_empty
+            expect(json).not_to be_empty
             expect(json.size).to eq(10)
         end
     end
