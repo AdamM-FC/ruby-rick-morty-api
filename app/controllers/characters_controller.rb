@@ -1,9 +1,9 @@
 class CharactersController < ApplicationController
-   before_action :set_character, only: %i[show update destroy]
+  before_action :set_character, only: %i[show update destroy]
 
   def index
     @characters = Character.all
-    json_response(@characters)
+    render json: @characters.as_json(include: :episodes)
   end
 
   def create
