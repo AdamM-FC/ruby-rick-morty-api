@@ -12,7 +12,7 @@ class EpisodesController < ApplicationController
   end
 
   def show
-    json_response(@episode)
+    render json: @episode.as_json(include: :characters)
   end
 
   def update

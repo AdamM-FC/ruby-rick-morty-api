@@ -12,7 +12,7 @@ class CharactersController < ApplicationController
   end
 
   def show
-    json_response(@character)
+    render json: @character.as_json(include: :episodes)
   end
 
   def update

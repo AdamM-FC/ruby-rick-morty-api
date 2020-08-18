@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Episodes API', type: :request do
-  let!(:episodes) { create_list(:episode, 10) }
+  let!(:episodes) do 
+    episodes = create_list(:episode, 10) 
+    episodes.each do |episode|
+      character = build(:character)
+      episode.characters << character
+    end
+  end
   let(:episode_id) { episodes.first.id }
 
   # GET
@@ -11,6 +17,18 @@ RSpec.describe 'Episodes API', type: :request do
     it 'returns episodes' do
       expect(json).not_to be_empty
       expect(json.size).to eq(10)
+    end
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'Get /episodes/id' do
+    before { get "/episodes/#{episode_id}" }
+
+    it 'returns episode with characters' do
+      expect(json['characters']).not_to be_empty
     end
 
     it 'returns status code 200' do
