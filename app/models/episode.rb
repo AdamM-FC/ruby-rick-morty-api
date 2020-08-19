@@ -7,6 +7,16 @@ class Episode < ApplicationRecord
   validates_presence_of :url
 
   def as_json(_options = {})
-    super(include: :characters)
+    json = super()
+    json['character'] = create_character_list
+    json
+  end
+
+  private
+
+  def create_character_list
+    characters.map do |character|
+      "http://localhost:3000/characters/#{character.id}"
+    end
   end
 end
