@@ -28,7 +28,7 @@ RSpec.describe 'Characters API', type: :request do
     before { get "/characters/#{character_id}" }
 
     it 'returns character with episodes' do
-      expect(json['episodes']).not_to be_empty
+      expect(json['episode']).not_to be_empty
     end
 
     it 'returns status code 200' do

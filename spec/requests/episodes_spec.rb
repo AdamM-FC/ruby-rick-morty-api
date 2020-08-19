@@ -28,7 +28,7 @@ RSpec.describe 'Episodes API', type: :request do
     before { get "/episodes/#{episode_id}" }
 
     it 'returns episode with characters' do
-      expect(json['characters']).not_to be_empty
+      expect(json['character']).not_to be_empty
     end
 
     it 'returns status code 200' do
@@ -85,13 +85,19 @@ RSpec.describe 'Episodes API', type: :request do
 
   # PUT
   describe 'Put /episodes/:id' do
-    let(:valid_attributes) { { name: 'test' } }
+    name = 'John Doe'
+    let(:valid_attributes) { { name: name } }
 
     context 'when the record exists' do
       before { put "/episodes/#{episode_id}", params: valid_attributes }
 
-      it 'updates the record' do
+      it 'returns empty body' do
         expect(response.body).to be_empty
+      end
+
+      it 'updates the record' do
+        episode = Episode.find(episode_id)
+        expect(episode.name).to eq(name)
       end
 
       it 'returns status code 204' do
