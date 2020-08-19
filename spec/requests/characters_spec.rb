@@ -25,7 +25,7 @@ RSpec.describe 'Characters API', type: :request do
   end
 
   describe 'Get /characters/id' do
-    before { get '/characters/1' }
+    before { get "/characters/#{character_id}" }
 
     it 'returns character with episodes' do
       expect(json['episodes']).not_to be_empty
