@@ -5,4 +5,8 @@ class Episode < ApplicationRecord
   validates_presence_of :air_date
   validates_presence_of :episode
   validates_presence_of :url
+
+  def as_json(_options = {})
+    super(include: :characters)
+  end
 end
