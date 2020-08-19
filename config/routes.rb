@@ -4,4 +4,7 @@ Rails.application.routes.draw do
 
   resources :episodes do
   end
+
+  resources :locations do
+  end
 end
