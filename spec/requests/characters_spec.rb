@@ -75,13 +75,20 @@ RSpec.describe 'Characters API', type: :request do
 
   # PUT
   describe 'Put /characters/:id' do
-    let(:valid_attributes) { { name: 'test' } }
+    name = 'John Doe'
+
+    let(:valid_attributes) { { name: name } }
 
     context 'when the record exists' do
       before { put "/characters/#{character_id}", params: valid_attributes }
 
-      it 'updates the record' do
+      it 'returns empty body' do
         expect(response.body).to be_empty
+      end
+
+      it 'updates the record' do
+        character = Character.find(character_id)
+        expect(character.name).to eq(name)
       end
 
       it 'returns status code 204' do
