@@ -1,9 +1,9 @@
 class CharactersController < ApplicationController
-   before_action :set_character, only: %i[show update destroy]
+  before_action :set_character, only: %i[show update destroy]
 
   def index
     @characters = Character.all
-    json_response(@characters)
+    render json: @characters.as_json
   end
 
   def create
@@ -12,7 +12,7 @@ class CharactersController < ApplicationController
   end
 
   def show
-    json_response(@character)
+    render json: @character.as_json
   end
 
   def update

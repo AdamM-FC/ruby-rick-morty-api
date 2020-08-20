@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_153645) do
+ActiveRecord::Schema.define(version: 2020_08_18_100733) do
 
   create_table "characters", force: :cascade do |t|
     t.string "name"
@@ -19,7 +19,26 @@ ActiveRecord::Schema.define(version: 2020_08_17_153645) do
     t.string "character_type"
     t.string "gender"
     t.string "image"
-    t.time "created"
+    t.time "created", default: "2000-01-01 15:37:54"
   end
 
+  create_table "characters_episodes", force: :cascade do |t|
+    t.integer "character_id", null: false
+    t.integer "episode_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["character_id"], name: "index_characters_episodes_on_character_id"
+    t.index ["episode_id"], name: "index_characters_episodes_on_episode_id"
+  end
+
+  create_table "episodes", force: :cascade do |t|
+    t.string "name"
+    t.time "air_date"
+    t.string "episode"
+    t.string "url"
+    t.time "created", default: "2000-01-01 15:37:54"
+  end
+
+  add_foreign_key "characters_episodes", "characters"
+  add_foreign_key "characters_episodes", "episodes"
 end
