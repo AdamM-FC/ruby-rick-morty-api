@@ -24,7 +24,7 @@ class Character < ApplicationRecord
   def location_json(location)
     {
       name: location.name,
-      url: "www.google.com/#{location.id}"
+      url: "http://localhost:3000/locations/#{location.id}"
     }
   end
 
