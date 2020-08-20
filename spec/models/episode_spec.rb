@@ -8,16 +8,17 @@ RSpec.describe Episode, type: :model do
 
   describe 'Adding characters ' do
     let!(:episode) { build(:episode) }
+    let!(:character) { build(:character) }
     let(:episode_id) { episode.id }
 
     before do
-      character = build(:character)
       episode.characters << character
+      character.episodes << episode
     end
 
     it 'updates character episodes list with episode' do
-      character = episode.characters.first
-      character.episodes.any? { |episode| episode.id == episode_id }
+      episode_found = character.episodes.any? { |episode| episode.id == episode_id }
+      expect(episode_found).to eq(true)
     end
   end
 end

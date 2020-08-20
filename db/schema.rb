@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_100733) do
     t.string "character_type"
     t.string "gender"
     t.string "image"
-    t.time "created", default: "2000-01-01 15:37:54"
+    t.time "created", default: "2000-01-01 16:44:52"
   end
 
   create_table "characters_episodes", force: :cascade do |t|
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_100733) do
     t.time "air_date"
     t.string "episode"
     t.string "url"
-    t.time "created", default: "2000-01-01 15:37:54"
+    t.time "created", default: "2000-01-01 16:44:52"
   end
 
   add_foreign_key "characters_episodes", "characters"
