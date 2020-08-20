@@ -9,5 +9,10 @@ FactoryBot.define do
     created { Time.now }
     association :location, factory: :location
     association :origin, factory: :location
+    trait :with_episodes do
+      after(:build) do |character|
+        character.episodes << FactoryBot.build(:episode)
+      end
+    end
   end
 end

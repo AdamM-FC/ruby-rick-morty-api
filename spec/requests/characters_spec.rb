@@ -1,13 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Characters API', type: :request do
-  let!(:characters) do
-    characters = create_list(:character, 10)
-    characters.each do |character|
-      episode = build(:episode)
-      character.episodes << episode
-    end
-  end
+  let!(:characters) { create_list(:character, 10, :with_episodes) }
   let(:character_id) { characters.first.id }
   let(:location) { characters.first.location }
   let(:origin) { characters.first.origin }

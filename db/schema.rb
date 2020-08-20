@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_100733) do
+ActiveRecord::Schema.define(version: 2020_08_20_132202) do
 
   create_table "characters", force: :cascade do |t|
     t.string "name"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2020_08_18_100733) do
     t.string "gender"
     t.string "image"
     t.time "created", default: "2000-01-01 16:44:52"
+    t.integer "location_id"
+    t.integer "origin_id"
   end
 
   create_table "characters_episodes", force: :cascade do |t|
@@ -37,6 +39,14 @@ ActiveRecord::Schema.define(version: 2020_08_18_100733) do
     t.string "episode"
     t.string "url"
     t.time "created", default: "2000-01-01 16:44:52"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.string "location_type"
+    t.string "dimension"
+    t.string "url"
+    t.time "created", default: "2000-01-01 17:13:10"
   end
 
   add_foreign_key "characters_episodes", "characters"

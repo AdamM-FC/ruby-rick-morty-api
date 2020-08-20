@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Locations API', type: :request do
-  let!(:locations) do
-    locations = create_list(:location, 10, :with_residents)
-  end
+  let!(:locations) { create_list(:location, 10, :with_residents) }
   let(:location_id) { locations.first.id }
 
   # GET
