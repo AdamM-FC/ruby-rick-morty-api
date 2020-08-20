@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Locations API', type: :request do
-  let!(:locations) { create_list(:location, 10, :with_residents) }
+  let!(:locations) { create_list(:location, 10) }
   let(:location_id) { locations.first.id }
 
   # GET
@@ -10,7 +10,7 @@ RSpec.describe 'Locations API', type: :request do
 
     it 'returns locations' do
       expect(json).not_to be_empty
-      expect(json.size).to eq(30)
+      expect(json.size).to eq(10)
     end
 
     it 'returns status code 200' do
@@ -19,7 +19,11 @@ RSpec.describe 'Locations API', type: :request do
   end
 
   describe 'Get /locations/id' do
-    before { get "/locations/#{location_id}" }
+    before do
+      location = Location.find(location_id)
+      location.residents << build(:character)
+      get "/locations/#{location_id}"
+    end
 
     it 'returns location with residents' do
       expect(json['residents']).not_to be_empty
@@ -62,8 +66,8 @@ RSpec.describe 'Locations API', type: :request do
     context 'when the request is invalid' do
       before do
         post '/locations', params: { location_type: 'Alive',
-                                      dimension: 'Human',
-                                      url: 'Character'}
+                                     dimension: 'Human',
+                                     url: 'Character' }
       end
 
       it 'returns status code 422' do
