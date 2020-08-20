@@ -25,12 +25,10 @@ character = Character.create!(name: 'Rick',
                               location_id: location1.id,
                               origin_id: location2.id)
 
-                              
-
 episode = Episode.create!(name: 'Pilot',
                           episode: 'S01E01',
                           air_date: '2000-01-01 11:46:25',
                           url: '"https://rickandmortyapi.com/api/episode/1')
 
 character.episodes << episode
-
+episode.characters << character

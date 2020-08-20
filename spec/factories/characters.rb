@@ -7,5 +7,7 @@ FactoryBot.define do
     gender { Faker::Lorem.word }
     image { Faker::Lorem.word }
     created { Time.now }
+    association :location, factory: :location
+    association :origin, factory: :location
   end
 end
