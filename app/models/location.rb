@@ -17,7 +17,7 @@ class Location < ApplicationRecord
 
   def create_character_list
     residents.map do |character|
-      "http://localhost:3000/characters/#{character.id}"
+      "#{HOST}/characters/#{character.id}"
     end
   end
 end

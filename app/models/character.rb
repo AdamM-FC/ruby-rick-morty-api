@@ -24,13 +24,13 @@ class Character < ApplicationRecord
   def location_json(location)
     {
       name: location.name,
-      url: "http://localhost:3000/locations/#{location.id}"
+      url: "#{HOST}/locations/#{location.id}"
     }
   end
 
   def create_episode_list
     episodes.map do |episode|
-      "http://localhost:3000/episodes/#{episode.id}"
+      "#{HOST}/episodes/#{episode.id}"
     end
   end
 end
