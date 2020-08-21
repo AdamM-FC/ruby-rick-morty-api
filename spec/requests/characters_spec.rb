@@ -1,14 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Characters API', type: :request do
-  let!(:characters) do
-    characters = create_list(:character, 10)
-    characters.each do |character|
-      episode = build(:episode)
-      character.episodes << episode
-    end
-  end
+  let!(:characters) { create_list(:character, 10, :with_episodes) }
   let(:character_id) { characters.first.id }
+  let(:location) { characters.first.location }
+  let(:origin) { characters.first.origin }
 
   # GET
   describe 'Get /characters' do
@@ -52,7 +48,9 @@ RSpec.describe 'Characters API', type: :request do
           status: status,
           character_type: character_type,
           gender: gender,
-          image: image }
+          image: image,
+          location_id: location.id,
+          origin_id: origin.id }
       end
 
       before { post '/characters', params: valid_attributes }
@@ -64,6 +62,8 @@ RSpec.describe 'Characters API', type: :request do
         expect(json['character_type']).to eq(character_type)
         expect(json['gender']).to eq(gender)
         expect(json['image']).to eq(image)
+        expect(json['location']['name']).to eq(location.name)
+        expect(json['origin']['name']).to eq(origin.name)
       end
 
       it 'returns status code 201' do
@@ -77,7 +77,9 @@ RSpec.describe 'Characters API', type: :request do
                                       status: 'Human',
                                       character_type: 'Character',
                                       gender: 'Male',
-                                      image: 'N/A' }
+                                      image: 'N/A',
+                                      location_id: 1,
+                                      origin_id: 2 }
       end
 
       it 'returns status code 422' do
@@ -115,7 +117,7 @@ RSpec.describe 'Characters API', type: :request do
     end
   end
 
-  # DELETE
+  # # DELETE
   describe 'DELETE /characters/:id' do
     before { delete "/characters/#{character_id}" }
 

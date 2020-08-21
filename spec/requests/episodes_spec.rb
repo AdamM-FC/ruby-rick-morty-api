@@ -1,13 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Episodes API', type: :request do
-  let!(:episodes) do 
-    episodes = create_list(:episode, 10) 
-    episodes.each do |episode|
-      character = build(:character)
-      episode.characters << character
-    end
-  end
+  let!(:episodes) { create_list(:episode, 10, :with_characters) }
   let(:episode_id) { episodes.first.id }
 
   # GET
