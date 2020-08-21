@@ -1,5 +1,7 @@
 class CharacterSerializer < ActiveModel::Serializer
-  attributes :id, :name, :status, :species, :character_type, :gender, :image, :created, :location, :origin, :episode
+  
+
+  attributes :id, :name, :status, :species, :type, :gender, :image, :created, :location, :origin, :episode
 
   def location
     location = Location.find(object.location_id)
@@ -14,8 +16,12 @@ class CharacterSerializer < ActiveModel::Serializer
   def location_json(location)
     {
       name: location.name,
-      url: "#{HOST}locations/#{location.id}"
+      url: "#{HOST}/locations/#{location.id}"
     }
+  end
+
+  def type
+    "#{object.character_type}"
   end
 
   def episode
@@ -24,4 +30,6 @@ class CharacterSerializer < ActiveModel::Serializer
       "#{HOST}/episodes/#{episode.id}"
     end
   end
+  
 end
+
