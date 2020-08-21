@@ -22,7 +22,7 @@ RSpec.describe 'Episodes API', type: :request do
     before { get "/episodes/#{episode_id}" }
 
     it 'returns episode with characters' do
-      expect(json['character']).not_to be_empty
+      expect(json['characters']).not_to be_empty
     end
 
     it 'returns status code 200' do

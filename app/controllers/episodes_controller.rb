@@ -3,7 +3,7 @@ class EpisodesController < ApplicationController
 
   def index
     @episodes = Episode.all
-    render json: @episodes.as_json
+    json_response(@episodes)
   end
 
   def create
@@ -12,7 +12,7 @@ class EpisodesController < ApplicationController
   end
 
   def show
-    render json: @episode.as_json
+    json_response(@episode)
   end
 
   def update

@@ -3,7 +3,7 @@ class CharactersController < ApplicationController
 
   def index
     @characters = Character.all
-    render json: @characters.as_json
+    json_response(@characters)
   end
 
   def create
@@ -12,7 +12,7 @@ class CharactersController < ApplicationController
   end
 
   def show
-    render json: @character.as_json
+    json_response(@character)
   end
 
   def update
