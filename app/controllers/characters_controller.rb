@@ -2,7 +2,7 @@ class CharactersController < ApplicationController
   before_action :set_character, only: %i[show update destroy]
 
   def index
-    @characters = Character.all
+    @characters = Character.all.paginate(page: params[:page], per_page: 20)
     json_response(@characters)
   end
 

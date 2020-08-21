@@ -2,7 +2,7 @@ class LocationsController < ApplicationController
   before_action :set_location, only: %i[show update destroy]
 
   def index
-    @locations = Location.all
+    @locations = Location.all.paginate(page: params[:page], per_page: 20)
     json_response(@locations)
   end
 

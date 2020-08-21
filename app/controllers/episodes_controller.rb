@@ -2,7 +2,7 @@ class EpisodesController < ApplicationController
   before_action :set_episode, only: %i[show update destroy]
 
   def index
-    @episodes = Episode.all
+    @episodes = Episode.all.paginate(page: params[:page], per_page: 20)
     json_response(@episodes)
   end
 
