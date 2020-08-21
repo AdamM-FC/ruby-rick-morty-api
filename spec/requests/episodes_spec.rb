@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Episodes API', type: :request do
-  let!(:episodes) { create_list(:episode, 10, :with_characters) }
+  let!(:episodes) { create_list(:episode, 50, :with_characters) }
   let(:episode_id) { episodes.first.id }
 
   # GET
@@ -10,7 +10,30 @@ RSpec.describe 'Episodes API', type: :request do
 
     it 'returns episodes' do
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(json['results'].size).to eq(20)
+    end
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'Get /episodes/?page' do
+    before { get '/episodes/?page=2' }
+
+    it 'returns episodes' do
+      expect(json).not_to be_empty
+      expect(json['results'].size).to eq(20)
+    end
+
+    it 'returns pagination information' do 
+      page_information = json['info']
+
+      expect(page_information).not_to be_empty
+      expect(page_information['count']).to eq(50)
+      expect(page_information['pages']).to eq(2)
+      expect(page_information['prev']).to eq("#{HOST}/episodes/?page=1")
+      expect(page_information['next']).to eq("#{HOST}/episodes/?page=3")
     end
 
     it 'returns status code 200' do

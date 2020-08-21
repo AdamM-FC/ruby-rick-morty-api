@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Locations API', type: :request do
-  let!(:locations) { create_list(:location, 10) }
+  let!(:locations) { create_list(:location, 50) }
   let(:location_id) { locations.first.id }
 
   # GET
@@ -10,7 +10,30 @@ RSpec.describe 'Locations API', type: :request do
 
     it 'returns locations' do
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(json['results'].size).to eq(20)
+    end
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'Get /locations/?page' do
+    before { get '/locations/?page=2' }
+
+    it 'returns locations' do
+      expect(json).not_to be_empty
+      expect(json['results'].size).to eq(20)
+    end
+
+    it 'returns pagination information' do 
+      page_information = json['info']
+
+      expect(page_information).not_to be_empty
+      expect(page_information['count']).to eq(50)
+      expect(page_information['pages']).to eq(2)
+      expect(page_information['prev']).to eq("#{HOST}/locations/?page=1")
+      expect(page_information['next']).to eq("#{HOST}/locations/?page=3")
     end
 
     it 'returns status code 200' do
