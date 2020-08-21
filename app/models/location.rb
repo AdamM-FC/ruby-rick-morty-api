@@ -6,18 +6,4 @@ class Location < ApplicationRecord
   validates_presence_of :dimension
   validates_presence_of :location_type
   validates_presence_of :url
-
-  def as_json(_options = {})
-    json = super()
-    json['residents'] = create_character_list
-    json
-  end
-
-  private
-
-  def create_character_list
-    residents.map do |character|
-      "#{HOST}/characters/#{character.id}"
-    end
-  end
 end

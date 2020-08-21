@@ -2,8 +2,8 @@ class EpisodesController < ApplicationController
   before_action :set_episode, only: %i[show update destroy]
 
   def index
-    @episodes = Episode.all
-    render json: @episodes.as_json
+    @episodes = Episode.all.paginate(page: params[:page], per_page: ITEMS_PER_PAGE)
+    serialize_array_with_links(@episodes, EpisodeSerializer, Episode.all.size)
   end
 
   def create
@@ -12,7 +12,7 @@ class EpisodesController < ApplicationController
   end
 
   def show
-    render json: @episode.as_json
+    json_response(@episode)
   end
 
   def update

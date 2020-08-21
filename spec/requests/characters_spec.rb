@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Characters API', type: :request do
-  let!(:characters) { create_list(:character, 10, :with_episodes) }
+  let!(:characters) { create_list(:character, 50, :with_episodes) }
   let(:character_id) { characters.first.id }
   let(:location) { characters.first.location }
   let(:origin) { characters.first.origin }
@@ -12,7 +12,30 @@ RSpec.describe 'Characters API', type: :request do
 
     it 'returns characters' do
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(json['results'].size).to eq(20)
+    end
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'Get /characters/?page' do
+    before { get '/characters/?page=2' }
+
+    it 'returns characters' do
+      expect(json).not_to be_empty
+      expect(json['results'].size).to eq(20)
+    end
+
+    it 'returns pagination information' do 
+      page_information = json['info']
+
+      expect(page_information).not_to be_empty
+      expect(page_information['count']).to eq(50)
+      expect(page_information['pages']).to eq(2)
+      expect(page_information['prev']).to eq("#{HOST}/characters/?page=1")
+      expect(page_information['next']).to eq("#{HOST}/characters/?page=3")
     end
 
     it 'returns status code 200' do
@@ -59,7 +82,7 @@ RSpec.describe 'Characters API', type: :request do
         expect(json['name']).to eq(name)
         expect(json['species']).to eq(species)
         expect(json['status']).to eq(status)
-        expect(json['character_type']).to eq(character_type)
+        expect(json['type']).to eq(character_type)
         expect(json['gender']).to eq(gender)
         expect(json['image']).to eq(image)
         expect(json['location']['name']).to eq(location.name)

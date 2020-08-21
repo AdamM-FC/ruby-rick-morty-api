@@ -2,8 +2,8 @@ class CharactersController < ApplicationController
   before_action :set_character, only: %i[show update destroy]
 
   def index
-    @characters = Character.all
-    render json: @characters.as_json
+    @characters = Character.all.paginate(page: params[:page], per_page: ITEMS_PER_PAGE)
+    serialize_array_with_links(@characters, CharacterSerializer, Character.all.size)
   end
 
   def create
@@ -12,7 +12,7 @@ class CharactersController < ApplicationController
   end
 
   def show
-    render json: @character.as_json
+    json_response(@character)
   end
 
   def update

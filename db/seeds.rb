@@ -6,28 +6,28 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-location1 = Location.create!(name: 'Earth',
-                             location_type: 'Planet',
-                             dimension: 'Dimension C-137',
-                             url: 'https://rickandmortyapi.com/api/location/1')
+100.times do |index|
+  Location.create!(name: Faker::Lorem.word,
+                   location_type: Faker::Lorem.word,
+                   dimension: Faker::Lorem.word,
+                   url: "#{HOST}location/#{index + 1}")
+end
 
-location2 = Location.create!(name: '(Replacement Dimension))',
-                             location_type: 'Planet',
-                             dimension: 'Replacement dimension',
-                             url: 'https://rickandmortyapi.com/api/location/20')
+50.times do |index|
+  Character.create!(name: Faker::Lorem.word,
+                    status: Faker::Lorem.word,
+                    species: Faker::Lorem.word,
+                    gender: Faker::Lorem.word,
+                    character_type: Faker::Lorem.word,
+                    image: "https://rickandmortyapi.com/api/character/avatar/#{index + 1}.jpeg",
+                    location_id: index + 1,
+                    origin_id: index + 2)
+end
 
-character = Character.create!(name: 'Rick',
-                              status: 'Alive',
-                              species: 'Human',
-                              gender: 'Male',
-                              character_type: 'human',
-                              image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-                              location_id: location1.id,
-                              origin_id: location2.id)
+50.times do |index|
+  Episode.create!(name: Faker::Lorem.word,
+                  episode: Faker::Lorem.word,
+                  air_date: Faker::Time.between_dates(from: Date.today - 3000, to: Date.today, period: :all),
+                  url: "#{HOST}/episode/#{index+1}")
+end
 
-episode = Episode.create!(name: 'Pilot',
-                          episode: 'S01E01',
-                          air_date: '2000-01-01 11:46:25',
-                          url: 'https://rickandmortyapi.com/api/episode/1')
-
-character.episodes << episode
