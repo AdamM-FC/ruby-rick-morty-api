@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_132202) do
     t.string "character_type"
     t.string "gender"
     t.string "image"
-    t.time "created", default: "2000-01-01 11:25:45"
+    t.time "created", default: "2000-01-01 10:57:50"
     t.integer "location_id"
     t.integer "origin_id"
   end
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_132202) do
     t.time "air_date"
     t.string "episode"
     t.string "url"
-    t.time "created", default: "2000-01-01 11:25:45"
+    t.time "created", default: "2000-01-01 10:57:50"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_132202) do
     t.string "location_type"
     t.string "dimension"
     t.string "url"
-    t.time "created", default: "2000-01-01 11:25:45"
+    t.time "created", default: "2000-01-01 10:57:50"
   end
 
   add_foreign_key "characters_episodes", "characters"

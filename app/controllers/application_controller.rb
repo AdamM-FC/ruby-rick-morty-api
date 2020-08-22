@@ -16,11 +16,11 @@ class ApplicationController < ActionController::API
   end
 
   def links(count)
-    total_pages = (ITEMS_PER_PAGE > count) ? 1 : count / ITEMS_PER_PAGE
-    current_page = params[:page].to_i.zero? ? 1 : params[:page].to_i
-    prev_page = current_page > 1 ? create_url(current_page - 1) : nil
-    next_page = current_page < total_pages + 1 ? create_url(current_page + 1) : nil
-
+    page = params[:page].to_i
+    total_pages = count / ITEMS_PER_PAGE
+    current_page = page.zero? ? 1 : page
+    prev_page = create_url(current_page - 1) if current_page > 1
+    next_page = create_url(current_page + 1) if current_page <= total_pages
     {
       count: count,
       pages: total_pages,

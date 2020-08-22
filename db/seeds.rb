@@ -25,9 +25,12 @@ end
 end
 
 50.times do |index|
-  Episode.create!(name: Faker::Lorem.word,
+Episode.create!(name: Faker::Lorem.word,
                   episode: Faker::Lorem.word,
                   air_date: Faker::Time.between_dates(from: Date.today - 3000, to: Date.today, period: :all),
                   url: "#{HOST}/episode/#{index+1}")
 end
 
+Character.all.each_with_index do |character, index|
+character.episodes << Episode.find(index+1)
+end
