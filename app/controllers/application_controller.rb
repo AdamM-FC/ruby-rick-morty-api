@@ -4,7 +4,9 @@ class ApplicationController < ActionController::API
 
   ITEMS_PER_PAGE = 20
 
-  def serialize_array_with_links(array, serializer, total_count)
+  def serialize_object_with_links(object, serializer)
+    total_count = object.all.size
+    array = object.all.paginate(page: params[:page], per_page: ITEMS_PER_PAGE)
     results = ActiveModelSerializers::SerializableResource.new(
       array,
       each_serializer: serializer
@@ -14,6 +16,8 @@ class ApplicationController < ActionController::API
       results: results
     }
   end
+
+  private
 
   def links(count)
     page = params[:page].to_i

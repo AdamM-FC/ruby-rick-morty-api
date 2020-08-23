@@ -2,8 +2,7 @@ class CharactersController < ApplicationController
   before_action :set_character, only: %i[show update destroy]
 
   def index
-    @characters = Character.all.paginate(page: params[:page], per_page: ITEMS_PER_PAGE)
-    serialize_array_with_links(@characters, CharacterSerializer, Character.all.size)
+    serialize_object_with_links(Character, CharacterSerializer)
   end
 
   def create

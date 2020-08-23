@@ -2,8 +2,7 @@ class LocationsController < ApplicationController
   before_action :set_location, only: %i[show update destroy]
 
   def index
-    @locations = Location.all.paginate(page: params[:page], per_page: ITEMS_PER_PAGE)
-    serialize_array_with_links(@locations, LocationSerializer, Location.all.size)
+    serialize_object_with_links(Location, LocationSerializer)
   end
 
   def create

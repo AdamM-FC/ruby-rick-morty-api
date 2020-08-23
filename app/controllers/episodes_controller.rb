@@ -2,8 +2,7 @@ class EpisodesController < ApplicationController
   before_action :set_episode, only: %i[show update destroy]
 
   def index
-    @episodes = Episode.all.paginate(page: params[:page], per_page: ITEMS_PER_PAGE)
-    serialize_array_with_links(@episodes, EpisodeSerializer, Episode.all.size)
+    serialize_object_with_links(Episode, EpisodeSerializer)
   end
 
   def create
