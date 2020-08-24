@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe EpisodesController, type: :controller do
+RSpec.describe V1::EpisodesController, type: :controller do
 
 end
