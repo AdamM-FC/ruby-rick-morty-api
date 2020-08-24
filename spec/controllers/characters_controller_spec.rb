@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe CharactersController, type: :controller do
+RSpec.describe V1::CharactersController, type: :controller do
 
 end
