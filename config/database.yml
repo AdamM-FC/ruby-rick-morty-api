@@ -1,8 +1,8 @@
-# Postgres. Versions 3.8.0 and up are supported.
+# Postgres. Versions 1.2.3 and up are supported.
 #   gem install pg
 #
-#   Ensure the postgresql 3 gem is defined in your Gemfile
-#   gem 'postgresql'
+#   Ensure the postgres gem is defined in your Gemfile
+#   gem 'pg'
 #
 default: &default
   adapter: postgresql
