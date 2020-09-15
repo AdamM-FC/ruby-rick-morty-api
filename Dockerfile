@@ -1,4 +1,4 @@
-FROM quay.io/fundingcircle/alpine-ruby-builder:2.6
+FROM quay.io/fundingcircle/alpine-ruby-builder:2.7
 
 COPY . .
 
