@@ -41,6 +41,7 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'will_paginate', '~> 3.1.0'
 gem 'faker'
 gem 'pg' , '~> 1.2.3'
+gem 'ruby-kafka', '~> 0.5.4'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
