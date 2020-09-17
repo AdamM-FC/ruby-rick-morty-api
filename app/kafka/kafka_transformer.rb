@@ -7,7 +7,6 @@ class KafkaTransformer
 
   def subscribe
     @consumer = @client.consumer(group_id: 'rick-morty-transformer2')
-    # @consumer.commit_offsets
     @consumer.subscribe(RAW_DATA_TOPIC)
     @consumer.each_message do |message|
       json = transform_json(message.value)

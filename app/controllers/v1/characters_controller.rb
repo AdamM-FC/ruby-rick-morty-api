@@ -1,6 +1,4 @@
 module V1
-  require_relative './raw_data_topic_producer'
-
   class CharactersController < ApplicationController
     before_action :set_character, only: %i[show update destroy]
 
@@ -32,7 +30,7 @@ module V1
     private
 
     def permitted_params 
-      [:name, :species, :status, :character_type, :gender, :image, :location_id, :origin_id]
+      %i[name species status character_type gender image location_id origin_id]
     end
 
     def set_character
