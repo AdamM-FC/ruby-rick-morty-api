@@ -1,15 +1,12 @@
 class KafkaTransformer
     def initialize
-        seed_brokers = ['localhost:9092']
-        @client = Kafka.new(seed_brokers)
+        @client = Kafka.new(KAFKA_SEED_BROKERS)
         @producer = @client.producer
-        @producer_topic = 'transform-topic'
-        @subscriber_topic = 'raw-data-topic'
     end
     
     def subscribe
         @consumer = @client.consumer(group_id: 'rick-morty-transformer')
-        @consumer.subscribe(@subscriber_topic)
+        @consumer.subscribe(RAW_DATA_TOPIC)
         @consumer.each_message do |message| 
             json = transform_json(message.value)
             produce(json)
@@ -23,7 +20,7 @@ class KafkaTransformer
     end
 
     def produce(json)
-        @producer.produce(json, topic: @producer_topic)
+        @producer.produce(json, topic: TRANSFORMED_DATA_TOPIC)
         @producer.deliver_messages
         @producer.shutdown
     end

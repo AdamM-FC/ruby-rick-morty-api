@@ -4,11 +4,6 @@ module V1
   class CharactersController < ApplicationController
     before_action :set_character, only: %i[show update destroy]
 
-    def initialize
-      @rawDataTopicProducer = RawDataTopicProducer.new
-      @transformerTopicConsumer = TransformerTopicConsumer.new
-    end
-
     def index
       serialize_object_with_links(Character, CharacterSerializer)
     end
@@ -19,18 +14,18 @@ module V1
 
     def create
       character_params.require([:name, :species, :status, :character_type, :gender, :image])
-      @rawDataTopicProducer.produce(:POST, character_params)
+      RAW_DATA_PRODUCER.produce(:POST, character_params)
       head :no_content
     end
 
     def update
-      @rawDataTopicProducer.produce(:PATCH, character_params)
+      RAW_DATA_PRODUCER.produce(:PATCH, character_params)
       head :no_content
     end
 
     def destroy
       params.require(:id)
-      @rawDataTopicProducer.produce(:DELETE, params)
+      RAW_DATA_PRODUCER.produce(:DELETE, params)
       head :no_content
     end
 

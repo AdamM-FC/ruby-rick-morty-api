@@ -3,15 +3,13 @@ module V1
 
   class TransformerTopicConsumer
     def initialize
-      seed_brokers = ['localhost:9092']
-      @topic_name = 'transform-topic'
-      @client = Kafka.new(seed_brokers)
+      @client = Kafka.new(KAFKA_SEED_BROKERS)
       subscribe
     end
 
     def subscribe
       @consumer = @client.consumer(group_id: 'rick-morty-transformer')
-      @consumer.subscribe(@topic_name)
+      @consumer.subscribe(TRANSFORMED_DATA_TOPIC)
       @consumer.each_message do |message|
         json = transform_json(message.value)
         next if json[:timestamp].nil?
