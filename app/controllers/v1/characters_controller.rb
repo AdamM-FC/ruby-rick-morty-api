@@ -5,35 +5,32 @@ module V1
     before_action :set_character, only: %i[show update destroy]
 
     def initialize
-      @dataTopicProducer = RawDataTopicProducer.new
+      @rawDataTopicProducer = RawDataTopicProducer.new
+      @transformerTopicConsumer = TransformerTopicConsumer.new
     end
 
     def index
       serialize_object_with_links(Character, CharacterSerializer)
     end
 
-    # GET
     def show
       json_response(@character)
     end
 
-    # POST
     def create
       character_params.require([:name, :species, :status, :character_type, :gender, :image])
-      @dataTopicProducer.produce(:POST, character_params)
+      @rawDataTopicProducer.produce(:POST, character_params)
       head :no_content
     end
 
-    # PATCH
     def update
-      @dataTopicProducer.produce(:PATCH, character_params)
+      @rawDataTopicProducer.produce(:PATCH, character_params)
       head :no_content
     end
 
-    # DELETE
     def destroy
       params.require(:id)
-      @dataTopicProducer.produce(:DELETE, params)
+      @rawDataTopicProducer.produce(:DELETE, params)
       head :no_content
     end
 
