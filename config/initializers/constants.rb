@@ -7,5 +7,4 @@ TRANSFORMED_DATA_TOPIC = 'transform-topic'
 
 RAW_DATA_PRODUCER = V1::RawDataTopicProducer.new
 TRANSFORMER_DATA_CONSUMER = V1::TransformerTopicConsumer.new
-
 KAFKA_TRANSFORMER = KafkaTransformer.new

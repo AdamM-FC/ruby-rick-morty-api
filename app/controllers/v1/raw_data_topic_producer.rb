@@ -9,10 +9,10 @@ module V1
     end
 
     def produce(action, params)
-      json = [
-        :action => action,
-        :data => params.as_json
-      ].to_json
+      json = {
+        action: action,
+        data: params.as_json
+      }.to_json
 
       @producer.produce(json, topic: RAW_DATA_TOPIC)
       @producer.deliver_messages
