@@ -14,46 +14,51 @@ class TransformerTopicConsumer
       next if json[:timestamp].nil?
 
       data = json[:data]
+      object = object_type(json[:object_type].to_sym)
       action = json[:action].to_sym
-      handle_action(data, action)
+      handle_action(data, action, object)
     end
   end
 
   private
 
-  def handle_action(data, action)
+  def handle_action(data, action, object)
     case action
     when :POST
-      create(data)
+      create(data, object)
     when :PATCH
-      update(data)
+      update(data, object)
     when :DELETE
-      destroy(data)
+      destroy(data, object)
     else
       p 'Message not supported'
     end
   end
 
-  def create(data)
-    object = object_type(data)
-    @character = object.create!(data)
+  def create(data, object)
+    object.create!(data)
   end
 
-  def update(data)
+  def update(data, object)
     id = data[:id]
-    character = Character.find(id)
+    object_to_update = object.find(id)
     data.except[:id]
-    character.update(data)
+    object_to_update.update(data)
   end
 
-  def destroy(data)
+  def destroy(data, object)
     id = data[:id]
-    Character.destroy(id)
+    object.destroy(id)
   end
 
-  def object_type(data)
-    return Character unless data[:status].nil?
-    return Episode unless data[:episode].nil?
-    return Location unless data[:residents].nil?
+  def object_type(symbol)
+    case symbol
+    when :CHARACTER
+      Character
+    when :EPISODE
+      Episode
+    when :LOCATION
+      Location
+    end
   end
 end

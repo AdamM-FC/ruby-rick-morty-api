@@ -14,18 +14,19 @@ module V1
       permitted_params = params.permit(character_params)
       character = Character.create(permitted_params)
 
-      send_kafka_data(permitted_params) if character.valid?
+      send_kafka_data(permitted_params, :CHARACTER) if character.valid?
       invalid_post_response(character.errors.full_messages) unless character.valid?
     end
 
     def update
-      RAW_DATA_PRODUCER.produce(:PATCH, params.permit(:id, *character_params))
+      permitted_params = params.permit(:id, *character_params)
+      RAW_DATA_PRODUCER.produce(:PATCH, :CHARACTER, permitted_params)
       head :no_content
     end
 
     def destroy
       params.require(:id)
-      RAW_DATA_PRODUCER.produce(:DELETE, params)
+      RAW_DATA_PRODUCER.produce(:DELETE, :CHARACTER, params)
       head :no_content
     end
 

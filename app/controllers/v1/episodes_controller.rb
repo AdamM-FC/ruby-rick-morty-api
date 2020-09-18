@@ -10,7 +10,7 @@ module V1
       permitted_params = params.permit(episode_params)
       episode = Episode.create(permitted_params)
       
-      send_kafka_data(permitted_params) if episode.valid?
+      send_kafka_data(permitted_params, :EPISODE) if episode.valid?
       invalid_post_response(episode.errors.full_messages) unless episode.valid?
     end
 
@@ -19,7 +19,8 @@ module V1
     end
 
     def update
-      @episode.update(episode_params)
+      permitted_params = params.permit(:id, *episode_params)
+      RAW_DATA_PRODUCER.produce(:PATCH, :EPISODE, permitted_params)
       head :no_content
     end
 
