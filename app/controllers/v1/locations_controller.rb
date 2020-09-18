@@ -7,8 +7,11 @@ module V1
     end
 
     def create
-      @location = Location.create!(location_params)
-      json_response(@location, :created)
+      permitted_params = params.permit(location_params)
+      location = Location.create(permitted_params)
+
+      send_kafka_data(permitted_params) if location.valid?
+      invalid_post_response(location.errors.full_messages) unless location.valid?
     end
 
     def show
@@ -32,7 +35,7 @@ module V1
     end
 
     def location_params
-      params.permit(:name, :location_type, :url, :dimension)
+      %i[name location_type url dimension]
     end
   end
 end

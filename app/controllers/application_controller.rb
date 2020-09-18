@@ -17,6 +17,19 @@ class ApplicationController < ActionController::API
     }
   end
 
+  def send_kafka_data(params)
+    RAW_DATA_PRODUCER.produce(:POST, params)
+    head :no_content
+  end
+
+  def invalid_post_response(errors_array)
+    payload = {
+      errors: errors_array,
+      status: 400
+    }
+    render json: payload
+  end
+
   private
 
   def links(count)

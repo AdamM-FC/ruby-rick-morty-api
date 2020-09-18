@@ -1,6 +1,4 @@
 module V1
-  require_relative './raw_data_topic_producer'
-
   class CharactersController < ApplicationController
     before_action :set_character, only: %i[show update destroy]
 
@@ -13,13 +11,15 @@ module V1
     end
 
     def create
-      params.require(permitted_params)
-      RAW_DATA_PRODUCER.produce(:POST, params.permit(permitted_params))
-      head :no_content
+      permitted_params = params.permit(character_params)
+      character = Character.create(permitted_params)
+
+      send_kafka_data(permitted_params) if character.valid?
+      invalid_post_response(character.errors.full_messages) unless character.valid?
     end
 
     def update
-      RAW_DATA_PRODUCER.produce(:PATCH, params.permit(:id, *permitted_params))
+      RAW_DATA_PRODUCER.produce(:PATCH, params.permit(:id, *character_params))
       head :no_content
     end
 
@@ -31,7 +31,7 @@ module V1
 
     private
 
-    def permitted_params
+    def character_params
       %i[name species status character_type gender image location_id origin_id]
     end
 
