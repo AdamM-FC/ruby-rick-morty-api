@@ -17,17 +17,17 @@ class ApplicationController < ActionController::API
     }
   end
 
-  def send_kafka_data(params, symbol)
-    RAW_DATA_PRODUCER.produce(:POST, symbol, params)
-    head :no_content
-  end
-
-  def invalid_post_response(errors_array)
-    payload = {
-      errors: errors_array,
-      status: 400
-    }
-    render json: payload
+  def save_and_render(object, params)
+    if object.valid?
+      RAW_DATA_PRODUCER.produce(request.method, controller_name, params)
+      render json: { message: 'Successfully received request' }, status: 200
+    else
+      payload = {
+        errors: object.errors.full_messages,
+        status: 400
+      }
+      render json: payload
+    end
   end
 
   private
@@ -44,7 +44,7 @@ class ApplicationController < ActionController::API
       prev: prev_page,
       next: next_page
     }
-   end
+  end
 
   def create_url(page)
     "#{HOST}/#{controller_name}/?page=#{page}"

@@ -7,7 +7,7 @@ class RawDataTopicProducer
   def produce(action, object, params)
     json = {
       action: action,
-      object_type: object,
+      controller_name: object,
       data: params.as_json
     }.to_json
 

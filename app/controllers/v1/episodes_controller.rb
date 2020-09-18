@@ -9,9 +9,7 @@ module V1
     def create
       permitted_params = params.permit(episode_params)
       episode = Episode.create(permitted_params)
-      
-      send_kafka_data(permitted_params, :EPISODE) if episode.valid?
-      invalid_post_response(episode.errors.full_messages) unless episode.valid?
+      save_and_render(episode, permitted_params)
     end
 
     def show
@@ -20,13 +18,14 @@ module V1
 
     def update
       permitted_params = params.permit(:id, *episode_params)
-      RAW_DATA_PRODUCER.produce(:PATCH, :EPISODE, permitted_params)
-      head :no_content
+      episode = Episode.find(params[:id])
+      save_and_render(episode, permitted_params)
     end
 
     def destroy
-      @episode.destroy
-      head :no_content
+      params.require(:id)
+      episode = Episode.find(params[:id])
+      save_and_render(episode, params)
     end
 
     private

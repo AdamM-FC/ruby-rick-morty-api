@@ -9,9 +9,7 @@ module V1
     def create
       permitted_params = params.permit(location_params)
       location = Location.create(permitted_params)
-
-      send_kafka_data(permitted_params, :LOCATION) if location.valid?
-      invalid_post_response(location.errors.full_messages) unless location.valid?
+      save_and_render(location, permitted_params)
     end
 
     def show
@@ -20,13 +18,14 @@ module V1
 
     def update
       permitted_params = params.permit(:id, *location_params)
-      RAW_DATA_PRODUCER.produce(:PATCH, :LOCATION, permitted_params)
-      head :no_content
+      location = Location.find(params[:id])
+      save_and_render(location, permitted_params)
     end
 
     def destroy
-      @location.destroy
-      head :no_content
+      params.require(:id)
+      location = Location.find(params[:id])
+      save_and_render(location, params)
     end
 
     private
