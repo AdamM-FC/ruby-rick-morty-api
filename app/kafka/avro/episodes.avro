@@ -1,0 +1,22 @@
+{
+	"namespace": "com.rick_and_morty.api",
+	"name":	"episodes",
+	"type": "record",
+	"fields": [{
+			"name": "name",
+			"type": "string"
+		},
+		{
+			"name": "air_date",
+			"type": "time"
+		},
+		{
+			"name": "episode",
+			"type": "string"
+		},
+		{
+			"name": "url",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,44 @@
+{
+  "namespace": "com.rick_and_morty.api",
+  "name": "characters",
+  "type": "record",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "status",
+      "type": "string"
+    },
+    {
+      "name": "species",
+      "type": "string"
+    },
+    {
+      "name": "character_type",
+      "type": "string"
+    },
+    {
+      "name": "gender",
+      "type": "string"
+    },
+    {
+      "name": "image",
+      "type": "string"
+    },
+    {
+      "name": "created",
+      "type": "time"
+    },
+    {
+      "name": "location_id",
+      "type": "int"
+    },
+    {
+      "name": "origin_id",
+      "type": "int"
+    }
+  ]
+}
+ 

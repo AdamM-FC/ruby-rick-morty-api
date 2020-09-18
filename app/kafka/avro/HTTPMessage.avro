@@ -1,0 +1,49 @@
+{
+  "namespace": "com.rick_and_morty.api",
+  "name": "HTTPMessage",
+  "type": "record",
+  "fields": [
+    {
+      "name": "action",
+      "type": [
+        {
+          "name": "action_enum",
+          "type": "enum",
+          "symbols": ["POST", "PATCH", "DELETE"]
+        }
+      ]
+    },
+    {
+      "name": "controller",
+      "type": [
+        {
+          "name": "enum",
+          "type": "controller_enum",
+          "symbols": ["characters", "episodes", "locations"]
+        }
+      ]
+    },
+    {
+      "name": "timestamp",
+      "type": "string"
+    },
+    {
+      "name": "data",
+      "type": [
+        {
+          "name": "characters",
+          "type": "record"
+        },
+        {
+          "name": "episodes",
+          "type": "record"
+        },
+        {
+          "name": "locations",
+          "type": "record"
+        }
+      ]
+    }
+  ]
+}
+

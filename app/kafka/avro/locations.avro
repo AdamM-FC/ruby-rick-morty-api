@@ -1,0 +1,22 @@
+{
+	"namespace": "com.rick_and_morty.api",
+	"name": "locations",
+	"type": "record",
+	"fields": [{
+			"name": "name",
+			"type": "string"
+		},
+		{
+			"name": "location_type",
+			"type": "string"
+		},
+		{
+			"name": "dimension",
+			"type": "string"
+		},
+		{
+			"name": "url",
+			"type": "string"
+		}
+	]
+}
