@@ -4,19 +4,17 @@ module V1
 
   class RawDataTopicProducer
     def initialize
-      seed_brokers = ['localhost:9092']
-      @topic_name = 'raw-data-topic'
-      client = Kafka.new(seed_brokers)
+      client = Kafka.new(KAFKA_SEED_BROKERS)
       @producer = client.producer
     end
 
     def produce(action, params)
       json = [
-        :action => action,
-        :data => params.as_json
+        action: action,
+        data: params.as_json
       ].to_json
 
-      @producer.produce(json, topic: @topic_name)
+      @producer.produce(json, topic: RAW_DATA_TOPIC)
       @producer.deliver_messages
     end
   end
