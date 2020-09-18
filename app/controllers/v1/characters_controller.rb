@@ -22,7 +22,7 @@ module V1
       RAW_DATA_PRODUCER.produce(:PATCH, params.permit(:id, *permitted_params))
       head :no_content
     end
- 
+
     def destroy
       params.require(:id)
       RAW_DATA_PRODUCER.produce(:DELETE, params)
@@ -31,8 +31,8 @@ module V1
 
     private
 
-    def permitted_params 
-      [:name, :species, :status, :character_type, :gender, :image, :location_id, :origin_id]
+    def permitted_params
+      %i[name species status character_type gender image location_id origin_id]
     end
 
     def set_character
