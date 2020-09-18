@@ -17,8 +17,8 @@ class ApplicationController < ActionController::API
     }
   end
 
-  def send_kafka_data(params)
-    RAW_DATA_PRODUCER.produce(:POST, params)
+  def send_kafka_data(params, symbol)
+    RAW_DATA_PRODUCER.produce(:POST, symbol, params)
     head :no_content
   end
 

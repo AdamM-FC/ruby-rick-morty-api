@@ -4,9 +4,10 @@ class RawDataTopicProducer
     @producer = client.producer
   end
 
-  def produce(action, params)
+  def produce(action, object, params)
     json = {
       action: action,
+      object_type: object,
       data: params.as_json
     }.to_json
 

@@ -10,7 +10,7 @@ module V1
       permitted_params = params.permit(location_params)
       location = Location.create(permitted_params)
 
-      send_kafka_data(permitted_params) if location.valid?
+      send_kafka_data(permitted_params, :LOCATION) if location.valid?
       invalid_post_response(location.errors.full_messages) unless location.valid?
     end
 
@@ -19,7 +19,8 @@ module V1
     end
 
     def update
-      @location.update(location_params)
+      permitted_params = params.permit(:id, *location_params)
+      RAW_DATA_PRODUCER.produce(:PATCH, :LOCATION, permitted_params)
       head :no_content
     end
 
