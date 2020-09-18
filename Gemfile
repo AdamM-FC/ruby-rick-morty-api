@@ -43,6 +43,7 @@ gem 'faker'
 gem 'pg' , '~> 1.2.3'
 gem 'ruby-kafka', '~> 0.5.4'
 gem 'rubocop', '~> 0.91'
+gem 'solargraph', '~> 0.39.15'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
