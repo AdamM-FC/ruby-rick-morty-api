@@ -26,7 +26,7 @@ class TransformerTopicConsumer
     case action
     when :POST
       create(data, object)
-    when :PATCH
+    when :PUT
       update(data, object)
     when :DELETE
       destroy(data, object)
@@ -51,13 +51,13 @@ class TransformerTopicConsumer
     object.destroy(id)
   end
 
-  def object_type(symbol)
-    case symbol
-    when :CHARACTER
+  def object_type(controller_name)
+    case controller_name
+    when :characters
       Character
-    when :EPISODE
+    when :episodes
       Episode
-    when :LOCATION
+    when :locations
       Location
     end
   end

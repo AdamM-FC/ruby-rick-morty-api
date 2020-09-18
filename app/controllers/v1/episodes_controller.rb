@@ -20,13 +20,14 @@ module V1
 
     def update
       permitted_params = params.permit(:id, *episode_params)
-      RAW_DATA_PRODUCER.produce(:PATCH, :EPISODE, permitted_params)
-      head :no_content
+      episode = Episode.find(params[:id])
+      save_and_render(episode, permitted_params)
     end
 
     def destroy
-      @episode.destroy
-      head :no_content
+      params.require(:id)
+      episode = Episode.find(params[:id])
+      save_and_render(episode, params)
     end
 
     private

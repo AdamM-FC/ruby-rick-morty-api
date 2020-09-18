@@ -20,13 +20,14 @@ module V1
 
     def update
       permitted_params = params.permit(:id, *location_params)
-      RAW_DATA_PRODUCER.produce(:PATCH, :LOCATION, permitted_params)
-      head :no_content
+      location = Location.find(params[:id])
+      save_and_render(location, permitted_params)
     end
 
     def destroy
-      @location.destroy
-      head :no_content
+      params.require(:id)
+      location = Location.find(params[:id])
+      save_and_render(location, params)
     end
 
     private
