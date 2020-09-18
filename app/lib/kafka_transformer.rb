@@ -2,13 +2,16 @@ class KafkaTransformer
   def initialize
     @client = Kafka.new(KAFKA_SEED_BROKERS)
     @producer = @client.producer
+    Thread.new { subscribe }
   end
 
   def subscribe
-    @consumer = @client.consumer(group_id: 'rick-morty-transformer')
+    @consumer = @client.consumer(group_id: 'rick-morty-transformer2')
+    # @consumer.commit_offsets
     @consumer.subscribe(RAW_DATA_TOPIC)
     @consumer.each_message do |message|
       json = transform_json(message.value)
+      p json.class
       produce(json)
     end
   end

@@ -4,25 +4,26 @@ module V1
   class TransformerTopicConsumer
     def initialize
       @client = Kafka.new(KAFKA_SEED_BROKERS)
-      subscribe
+
+      Thread.new { subscribe }
     end
 
     def subscribe
       @consumer = @client.consumer(group_id: 'rick-morty-transformer')
       @consumer.subscribe(TRANSFORMED_DATA_TOPIC)
       @consumer.each_message do |message|
-        json = transform_json(message.value)
+        json = JSON.parse(message.value, { symbolize_names: true })
         next if json[:timestamp].nil?
 
-        action = json[:action]
+        action = json[:action].to_sym
         data = json[:data]
 
         case action
-        when :CREATE
+        when :POST
           create(data)
-        when :UPDATE
+        when :PATCH
           update(data)
-        when :DESTROY
+        when :DELETE
           destroy(data)
         else
           p 'Message not supported'
@@ -31,16 +32,19 @@ module V1
     end
 
     def create(data)
-      # @character = Character.create!(character_params)
-      # json_response(@character, :created)
+      @character = Character.create!(data)
     end
 
     def update(data)
-      # @character.update(character_params)
+      id = data[:id]
+      character = Character.find(id)
+      data.except[:id]
+      character.update(data)
     end
 
     def destroy(data)
-      # @character.destroy
+      id = data[:id]
+      Character.destroy(id)
     end
   end
 end
