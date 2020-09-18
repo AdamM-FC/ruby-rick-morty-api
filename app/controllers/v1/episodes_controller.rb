@@ -7,8 +7,11 @@ module V1
     end
 
     def create
-      @episode = Episode.create!(episode_params)
-      json_response(@episode, :created)
+      permitted_params = params.permit(episode_params)
+      episode = Episode.create(permitted_params)
+      
+      send_kafka_data(permitted_params) if episode.valid?
+      invalid_post_response(episode.errors.full_messages) unless episode.valid?
     end
 
     def show
@@ -28,7 +31,7 @@ module V1
     private
 
     def episode_params
-      params.permit(:name, :episode, :air_date, :url)
+      %i[name episode air_date url gender]
     end
 
     def set_episode

@@ -6,11 +6,10 @@ class KafkaTransformer
   end
 
   def subscribe
-    @consumer = @client.consumer(group_id: 'rick-morty-transformer2')
+    @consumer = @client.consumer(group_id: 'rick-morty-transformer')
     @consumer.subscribe(RAW_DATA_TOPIC)
     @consumer.each_message do |message|
       json = transform_json(message.value)
-      p json.class
       produce(json)
     end
   end

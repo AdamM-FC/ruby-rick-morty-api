@@ -6,7 +6,7 @@ class TransformerTopicConsumer
   end
 
   def subscribe
-    @consumer = @client.consumer(group_id: 'rick-morty-transformer')
+    @consumer = @client.consumer(group_id: 'rick-morty-raw-data')
     @consumer.subscribe(TRANSFORMED_DATA_TOPIC)
     @consumer.each_message do |message|
       json = JSON.parse(message.value, { symbolize_names: true })
@@ -35,7 +35,8 @@ class TransformerTopicConsumer
   end
 
   def create(data)
-    @character = Character.create!(data)
+    object = object_type(data)
+    @character = object.create!(data)
   end
 
   def update(data)
@@ -48,5 +49,11 @@ class TransformerTopicConsumer
   def destroy(data)
     id = data[:id]
     Character.destroy(id)
+  end
+
+  def object_type(data)
+    return Character unless data[:status].nil?
+    return Episode unless data[:episode].nil?
+    return Location unless data[:residents].nil?
   end
 end
