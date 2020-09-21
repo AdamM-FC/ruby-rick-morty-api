@@ -17,8 +17,8 @@
       "name": "controller",
       "type": [
         {
-          "name": "enum",
-          "type": "controller_enum",
+          "name": "controller_enum",
+          "type": "enum",
           "symbols": ["characters", "episodes", "locations"]
         }
       ]

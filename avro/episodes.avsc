@@ -8,7 +8,7 @@
 		},
 		{
 			"name": "air_date",
-			"type": "time"
+			"type": "int"
 		},
 		{
 			"name": "episode",

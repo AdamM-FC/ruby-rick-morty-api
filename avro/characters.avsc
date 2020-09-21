@@ -29,7 +29,7 @@
     },
     {
       "name": "created",
-      "type": "time"
+      "type": "int"
     },
     {
       "name": "location_id",
