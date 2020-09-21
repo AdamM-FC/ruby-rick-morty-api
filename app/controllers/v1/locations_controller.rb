@@ -7,8 +7,9 @@ module V1
     end
 
     def create
-      @location = Location.create!(location_params)
-      json_response(@location, :created)
+      permitted_params = params.permit(location_params)
+      location = Location.create(permitted_params)
+      save_and_render(location, permitted_params)
     end
 
     def show
@@ -16,13 +17,15 @@ module V1
     end
 
     def update
-      @location.update(location_params)
-      head :no_content
+      permitted_params = params.permit(:id, *location_params)
+      location = Location.find(params[:id])
+      save_and_render(location, permitted_params)
     end
 
     def destroy
-      @location.destroy
-      head :no_content
+      params.require(:id)
+      location = Location.find(params[:id])
+      save_and_render(location, params)
     end
 
     private
@@ -32,7 +35,7 @@ module V1
     end
 
     def location_params
-      params.permit(:name, :location_type, :url, :dimension)
+      %i[name location_type url dimension]
     end
   end
 end

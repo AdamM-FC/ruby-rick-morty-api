@@ -7,8 +7,9 @@ module V1
     end
 
     def create
-      @episode = Episode.create!(episode_params)
-      json_response(@episode, :created)
+      permitted_params = params.permit(episode_params)
+      episode = Episode.create(permitted_params)
+      save_and_render(episode, permitted_params)
     end
 
     def show
@@ -16,19 +17,21 @@ module V1
     end
 
     def update
-      @episode.update(episode_params)
-      head :no_content
+      permitted_params = params.permit(:id, *episode_params)
+      episode = Episode.find(params[:id])
+      save_and_render(episode, permitted_params)
     end
 
     def destroy
-      @episode.destroy
-      head :no_content
+      params.require(:id)
+      episode = Episode.find(params[:id])
+      save_and_render(episode, params)
     end
 
     private
 
     def episode_params
-      params.permit(:name, :episode, :air_date, :url)
+      %i[name episode air_date url gender]
     end
 
     def set_episode

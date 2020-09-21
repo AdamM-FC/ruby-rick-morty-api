@@ -17,6 +17,19 @@ class ApplicationController < ActionController::API
     }
   end
 
+  def save_and_render(object, params)
+    if object.valid?
+      RAW_DATA_PRODUCER.produce(request.method, controller_name, params)
+      render json: { message: 'Successfully received request' }, status: 200
+    else
+      payload = {
+        errors: object.errors.full_messages,
+        status: 400
+      }
+      render json: payload
+    end
+  end
+
   private
 
   def links(count)
@@ -31,7 +44,7 @@ class ApplicationController < ActionController::API
       prev: prev_page,
       next: next_page
     }
-   end
+  end
 
   def create_url(page)
     "#{HOST}/#{controller_name}/?page=#{page}"
