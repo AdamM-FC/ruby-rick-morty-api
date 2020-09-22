@@ -1,0 +1,143 @@
+[
+    {
+        "type": "enum",
+        "name": "Action_Types",
+        "symbols": ["POST", "PATCH", "DELETE"]
+    },
+    {
+        "type": "record",
+        "name": "Character",
+        "fields": [
+            {
+                "name": "character_type",
+                "type": "string"
+            },
+            {
+                "name": "gender",
+                "type": "string"
+            },
+            {
+                "name": "image",
+                "type": "string"
+            },
+            {
+                "name": "location_id",
+                "type": "int"
+            },
+            {
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "name": "origin_id",
+                "type": "int"
+            },
+            {
+                "name": "species",
+                "type": "string"
+            },
+            {
+                "name": "status",
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "Episode",
+        "fields": [
+            {
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "name": "air_date",
+                "type": "string"
+            },
+            {
+                "name": "episode",
+                "type": "string"
+            },
+            {
+                "name": "url",
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "Location",
+        "fields": [
+            {
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "name": "location_type",
+                "type": "string"
+            },
+            {
+                "name": "dimension",
+                "type": "string"
+            },
+            {
+                "name": "url",
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "Character_Record",
+        "fields": [
+            {
+                "name": "data",
+                "type": "Character"
+            },
+            {
+                "name": "action",
+                "type": "Action_Types"
+            },
+            {
+                "name": "controller_name",
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "Episode_Record",
+        "fields": [
+            {
+                "name": "data",
+                "type": "Episode"
+            },
+            {
+                "name": "action",
+                "type": "Action_Types"
+            },
+            {
+                "name": "controller_name",
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "Location_Record",
+        "fields": [
+            {
+                "name": "data",
+                "type": "Location"
+            },
+            {
+                "name": "action",
+                "type": "Action_Types"
+            },
+            {
+                "name": "controller_name",
+                "type": "string"
+            }
+        ]
+    }
+]
