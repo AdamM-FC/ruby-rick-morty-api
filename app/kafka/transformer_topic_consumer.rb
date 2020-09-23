@@ -5,10 +5,6 @@ class TransformerTopicConsumer
     Thread.new { subscribe }
   end
 
-  def avro
-    AvroTurf.new(schemas_path: 'app/avro/')
-  end
-
   def subscribe
     @consumer = @client.consumer(group_id: 'rick-morty-raw-data')
     @consumer.subscribe(TRANSFORMED_DATA_TOPIC)
