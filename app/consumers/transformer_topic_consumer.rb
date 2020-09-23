@@ -1,23 +1,15 @@
-class TransformerTopicConsumer
-  def initialize
-    @client = Kafka.new(KAFKA_SEED_BROKERS)
+class TransformerTopicConsumer < Racecar::Consumer
+  subscribes_to TRANSFORMED_DATA_TOPIC, start_from_beginning: false
 
-    Thread.new { subscribe }
-  end
+  def process(message)
+    hash_map = AVRO_MANAGER.decode_data(message.value)
+    hash_map.transform_keys!(&:to_sym)
 
-  def subscribe
-    @consumer = @client.consumer(group_id: 'rick-morty-raw-data')
-    @consumer.subscribe(TRANSFORMED_DATA_TOPIC)
-    @consumer.each_message do |message|
-      hash_map = AVRO_MANAGER.decode_data(message.value)
-      hash_map.transform_keys!(&:to_sym)
-
-      data = hash_map[:data]
-      object = object_type(hash_map[:controller_name].to_sym)
-      action = hash_map[:action].to_sym
-      id = hash_map[:id] unless action == :POST
-      handle_action(data, action, object, id)
-    end
+    data = hash_map[:data]
+    object = object_type(hash_map[:controller_name].to_sym)
+    action = hash_map[:action].to_sym
+    id = hash_map[:id] unless action == :POST
+    handle_action(data, action, object, id)
   end
 
   private

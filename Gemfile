@@ -45,6 +45,7 @@ gem 'ruby-kafka', '~> 0.5.4'
 gem 'rubocop', '~> 0.91'
 gem 'solargraph', '~> 0.39.15'
 gem 'avro_turf', '~> 1.3.0'
+gem 'racecar', '~> 2.0.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'

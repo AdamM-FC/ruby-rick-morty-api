@@ -11,10 +11,7 @@ class RawDataTopicProducer
       data: params
     } 
 
-    if object_id
-      data_hashmap.merge!(id: object_id)
-    end
-
+    data_hashmap.merge!(id: object_id) if object_id
     encoded_data = AVRO_MANAGER.encode_data(data_hashmap)
     @producer.produce(encoded_data, topic: RAW_DATA_TOPIC)
     @producer.deliver_messages
