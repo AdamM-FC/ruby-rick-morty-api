@@ -1,0 +1,124 @@
+[
+    {
+        "type": "enum",
+        "name": "action_types",
+        "symbols": ["POST", "PUT", "DELETE"]
+    },
+    {
+        "type": "enum",
+        "name": "controller_types",
+        "symbols": ["characters", "locations", "episodes"]
+    },
+    {
+        "type": "record",
+        "name": "character",
+        "fields": [
+            {
+                "name": "character_type",
+                "type": "string"
+            },
+            {
+                "name": "gender",
+                "type": "string"
+            },
+            {
+                "name": "image",
+                "type": "string"
+            },
+            {
+                "name": "location_id",
+                "type": ["string", "int"]
+            },
+            {
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "name": "origin_id",
+                "type": ["string", "int"]
+            },
+            {
+                "name": "species",
+                "type": "string"
+            },
+            {
+                "name": "status",
+                "type": "string"
+            },
+            {
+                "name": "created",
+                "type": ["null", "string"]
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "episode",
+        "fields": [
+            {
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "name": "air_date",
+                "type": "string"
+            },
+            {
+                "name": "episode",
+                "type": "string"
+            },
+            {
+                "name": "url",
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "location",
+        "fields": [
+            {
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "name": "location_type",
+                "type": "string"
+            },
+            {
+                "name": "dimension",
+                "type": "string"
+            },
+            {
+                "name": "url",
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "example_record",
+        "fields": [
+            {
+                "name": "id",
+                "type": ["null", "int"]
+            },
+            {
+                "name": "data",
+                "type": ["character", "episode", "location"]
+            },
+            {
+                "name": "action",
+                "type": "action_types"
+            },
+            {
+                "name": "controller_name",
+                "type": "controller_types"
+            },
+            {
+                "name": "timestamp",
+                "type": ["null", "string"]
+            }
+        ]
+    }
+]
