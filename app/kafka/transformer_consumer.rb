@@ -1,8 +1,8 @@
-class TransformerTopicConsumer < Racecar::Consumer
+class TransformerConsumer < Racecar::Consumer
   subscribes_to RAW_DATA_TOPIC, start_from_beginning: false
 
   def process(message)
-    p 'TransformerTopicConsumer received'
+    p 'TransformerConsumer received'
     updated_data = append_timestamp(message.value)
     produce(updated_data, topic: TRANSFORMED_DATA_TOPIC, key: 'kafka_transformer_key')
   end

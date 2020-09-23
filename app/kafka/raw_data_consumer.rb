@@ -1,4 +1,4 @@
-class KafkaTransformerConsumer < Racecar::Consumer
+class RawDataConsumer < Racecar::Consumer
   subscribes_to TRANSFORMED_DATA_TOPIC, start_from_beginning: false
 
   def process(message)
@@ -10,19 +10,6 @@ class KafkaTransformerConsumer < Racecar::Consumer
     action = hash_map[:action].to_sym
     id = hash_map[:id] unless action == :POST
     handle_action(data, action, object, id)
-  end
-
-  def produce(action, object, params, object_id = nil)
-    data_hashmap = {
-      action: action,
-      controller_name: object,
-      data: params
-    } 
-
-    data_hashmap.merge!(id: object_id) if object_id
-    encoded_data = AVRO_MANAGER.encode_data(data_hashmap)
-
-    produce(encoded_data, topic: RAW_DATA_TOPIC, key: 'kafka_transformer_key')
   end
   
   private
