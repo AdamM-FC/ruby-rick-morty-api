@@ -13,19 +13,20 @@ module V1
     def create
       permitted_params = params.permit(character_params)
       character = Character.new(permitted_params)
-      save_and_render(character, permitted_params)
+      save_and_render(character, permitted_params.to_hash)
     end
 
     def update
       permitted_params = params.permit(:id, *character_params)
       character = Character.find(params[:id])
-      save_and_render(character, permitted_params)
+      updated_params = character.attributes.merge!(permitted_params.to_hash)
+      save_and_render(character, updated_params, character.id)
     end
 
     def destroy
       params.require(:id)
       character = Character.find(params[:id])
-      save_and_render(character, params)
+      save_and_render(character, character.attributes, character.id)
     end
 
     private

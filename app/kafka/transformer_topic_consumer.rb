@@ -9,27 +9,27 @@ class TransformerTopicConsumer
     @consumer = @client.consumer(group_id: 'rick-morty-raw-data')
     @consumer.subscribe(TRANSFORMED_DATA_TOPIC)
     @consumer.each_message do |message|
-      json = JSON.parse(message.value, { symbolize_names: true })
+      hash_map = AVRO_MANAGER.decode_data(message.value)
+      hash_map.transform_keys!(&:to_sym)
 
-      next if json[:timestamp].nil?
-
-      data = json[:data]
-      object = object_type(json[:controller_name].to_sym)
-      action = json[:action].to_sym
-      handle_action(data, action, object)
+      data = hash_map[:data]
+      object = object_type(hash_map[:controller_name].to_sym)
+      action = hash_map[:action].to_sym
+      id = hash_map[:id] unless action == :POST
+      handle_action(data, action, object, id)
     end
   end
 
   private
 
-  def handle_action(data, action, object)
+  def handle_action(data, action, object, id = nil)
     case action
     when :POST
       create(data, object)
     when :PUT
-      update(data, object)
+      update(data, object, id)
     when :DELETE
-      destroy(data, object)
+      destroy(object, id)
     else
       p 'Message not supported'
     end
@@ -39,15 +39,12 @@ class TransformerTopicConsumer
     object.create!(data)
   end
 
-  def update(data, object)
-    id = data[:id]
+  def update(data, object, id)
     object_to_update = object.find(id)
-    data.except[:id]
     object_to_update.update(data)
   end
 
-  def destroy(data, object)
-    id = data[:id]
+  def destroy(object, id)
     object.destroy(id)
   end
 
