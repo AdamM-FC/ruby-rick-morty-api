@@ -17,9 +17,9 @@ class ApplicationController < ActionController::API
     }
   end
 
-  def save_and_render(object, params)
+  def save_and_render(object, params_hash, object_id = nil)
     if object.valid?
-      RAW_DATA_PRODUCER.produce(request.method, controller_name, params)
+      RAW_DATA_PRODUCER.produce(request.method, controller_name, params_hash, object_id)
       render json: { message: 'Successfully received request' }, status: 200
     else
       payload = {

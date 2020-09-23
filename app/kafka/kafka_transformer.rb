@@ -9,19 +9,19 @@ class KafkaTransformer
     @consumer = @client.consumer(group_id: 'rick-morty-transformer')
     @consumer.subscribe(RAW_DATA_TOPIC)
     @consumer.each_message do |message|
-      json = transform_json(message.value)
-      produce(json)
+      updated_data = append_timestamp(message.value)
+      produce(updated_data)
     end
   end
 
-  def transform_json(json)
-    hash_map = JSON.parse(json)
-    hash_map.merge!(timestamp: Time.now)
-    hash_map.to_json
+  def append_timestamp(data)
+    decoded_data = AVRO_MANAGER.decode_data(data)
+    decoded_data.merge!(timestamp: Time.now)
+    AVRO_MANAGER.encode_data(decoded_data)
   end
 
-  def produce(json)
-    @producer.produce(json, topic: TRANSFORMED_DATA_TOPIC)
+  def produce(data)
+    @producer.produce(data, topic: TRANSFORMED_DATA_TOPIC)
     @producer.deliver_messages
     @producer.shutdown
   end
