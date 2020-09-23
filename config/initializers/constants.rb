@@ -1,7 +1,6 @@
-
 HOST = 'http://localhost:3000'.freeze
 
-KAFKA_SEED_BROKERS = ['localhost:9092']
+KAFKA_SEED_BROKERS = ['kafka:9092']
 
 RAW_DATA_TOPIC = 'raw-data-topic'
 TRANSFORMED_DATA_TOPIC = 'transform-topic'
