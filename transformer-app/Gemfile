@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby '2.7.1'
+
+gem 'rake', '~> 13.0.0'
+gem 'ruby-kafka', '~> 0.5.4'

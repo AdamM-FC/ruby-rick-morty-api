@@ -5,26 +5,26 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-rails/.bundle
+/.bundle
 
 # Ignore the default postgres database.
-rails/db/*.postgresql
+/db/*.postgresql
 
 # Ignore all logfiles and tempfiles.
-rails/log/*
-rails/tmp/*
-rails/log/.keep
-rails/tmp/.keep
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
-rails/tmp/pids/*
-rails/tmp/pids/
-rails/tmp/pids/.keep
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
 
 # Ignore uploaded files in development.
-rails/storage/*
-rails/storage/.keep
-rails/.byebug_history
+/storage/*
+!/storage/.keep
+.byebug_history
 
 # Ignore master key for decrypting credentials and more.
-rails/config/master.key
+/config/master.key

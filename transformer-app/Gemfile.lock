@@ -1,0 +1,18 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rake (13.0.1)
+    ruby-kafka (0.5.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rake (~> 13.0.0)
+  ruby-kafka (~> 0.5.4)
+
+RUBY VERSION
+   ruby 2.7.1p83
+
+BUNDLED WITH
+   2.1.4

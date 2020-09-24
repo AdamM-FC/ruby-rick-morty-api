@@ -1,0 +1,5 @@
+require_relative 'app/main'
+
+task :default do
+    Transformer::Main.new
+end
