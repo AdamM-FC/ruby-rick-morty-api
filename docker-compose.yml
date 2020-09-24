@@ -2,18 +2,27 @@ version: '3.7'
 
 services:
     rick-morty-api:
-        build: .
+        build: ./rails/
         depends_on:
-          kafka:
-            condition: service_started
-          postgres:
-            condition: service_started
+            - kafka
+            - postgres
         environment:
             DATABASE_URL: postgresql://postgres:postgres@postgres:5432/
+            KAFKA_SEED_BROKER: kafka:9092
         networks:
             - rick-morty-network
         ports:
             - 3001:3000
+    rick-morty-transformer:
+        build: ./transformer-app
+        command: ["scripts/wait-for-it.sh", "kafka:9092", "--", "echo", "Kafka started"]
+        depends_on:
+            - kafka
+            - rick-morty-api
+        environment:
+            KAFKA_SEED_BROKER: kafka:9092
+        networks:
+            - rick-morty-network
     kafka:
         image: wurstmeister/kafka
         container_name: kafka
