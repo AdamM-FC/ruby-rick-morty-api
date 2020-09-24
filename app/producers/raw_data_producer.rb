@@ -1,7 +1,5 @@
-require_relative '../lib/producer.rb'
-
 class RawDataProducer
-  include Kafka::Producers
+  include Kafka::Producer
 
   def call(action, object, params, object_id = nil)
     data_hashmap = {
