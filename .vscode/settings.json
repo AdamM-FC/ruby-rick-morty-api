@@ -1,3 +1,6 @@
 {
-    "ruby.format": "rubocop"
+    "ruby.format": "rubocop",
+    "ruby.lint": {
+        "rubocop": true
+    }
 }

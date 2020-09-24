@@ -1,9 +1,11 @@
-HOST = 'http://localhost:3000'.freeze
+# frozen_string_literal: true
 
-KAFKA_SEED_BROKERS = ['localhost:9092'].freeze
+HOST = 'http://localhost:3000'
 
-RAW_DATA_TOPIC = 'raw-data-topic'.freeze
-TRANSFORMED_DATA_TOPIC = 'transform-topic'.freeze
+KAFKA_SEED_BROKERS = 'localhost:9092'
 
-AVRO_MANAGER = AvroManager.new 
-RAW_DATA_PRODUCER = RawDataProducer.new 
+RAW_DATA_TOPIC = 'raw-data-topic'
+TRANSFORMED_DATA_TOPIC = 'transform-topic'
+
+AVRO_MANAGER = Avro::AvroManager.new
+RAW_DATA_PRODUCER = RawDataProducer.new

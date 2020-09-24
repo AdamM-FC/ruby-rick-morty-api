@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Kafka
   module Producer
     def producer
-      config = { "bootstrap.servers": 'localhost:9092' }
+      config = { "bootstrap.servers": KAFKA_SEED_BROKERS }
       @producer = Rdkafka::Config.new(config).producer
     end
 
